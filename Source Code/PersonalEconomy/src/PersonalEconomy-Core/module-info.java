@@ -1,0 +1,3 @@
+module airondlph.personaleconomy.core {
+
+}
