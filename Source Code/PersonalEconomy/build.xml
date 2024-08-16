@@ -1,0 +1,197 @@
+<!-- ##################### -->
+<!-- # @author Airondlph # -->
+<!-- ##################### -->
+<project name="PersonalEconomy" default="dist" basedir=".">
+	<description>Builds, tests, and runs the project: ${ant.project.name}</description>
+
+	<target name="load-properties">
+		<property file="build.properties" />
+	</target>
+
+	<target name="info" depends="load-properties">
+		<echo>Builds, tests, and runs the project: ${ant.project.name}</echo>
+		<echo></echo>
+		<echo>Versions:</echo>
+		<echo> - Ant: ${ant.version}</echo>
+        <echo />
+        <echo>Modules:</echo>
+        <echo> - PersonalEconomy-core</echo>
+        <echo> - PersonalEconomy-DesktopApp</echo>
+	</target>
+	
+	<target name="init" depends="load-properties">
+		<tstamp/>
+	</target>
+    
+	<target name="clean" depends="init, load-properties, clean-economy, clean-personalEconomy-core, clean-personalEconomy-desktopApp">
+        <delete dir="${build.dir}" />
+        <delete dir="${dist.dir}" />
+    </target>
+
+    <target name="clean-all" depends="clean"/>
+
+	<target name="build" depends="init, load-properties, clean, build-economy, build-personalEconomy-core, build-personalEconomy-desktopApp" />
+	
+    <target name="dist" depends="init, load-properties, clean, build, dist-economy, dist-personalEconomy-core, dist-personalEconomy-desktopApp" />
+    
+    <target name="run" depends="init, load-properties, clean, dist, run-personalEconomy-desktopApp" />
+
+	<target name="javadoc" depends="init, load-properties">
+        <echo>Not implemented</echo>
+    </target>
+
+    <target name="test" depends="init, load-properties">
+        <!-- JUnit tests -->
+        <echo>Not implemented</echo>
+    </target>
+
+
+<!--
+    ######################
+    ### Economy module ###
+    ######################
+-->
+
+    <target name="clean-economy" depends="init, load-properties">
+        <delete dir="${economy.build.dir}" />
+        <delete dir="${economy.dist.dir}" />
+    </target>
+
+    <target name="build-economy" depends="init, load-properties, clean-economy">
+        <mkdir dir="${economy.build.dir}" />
+       
+        <path id="classpath-economy">
+            <!--
+            <fileset dir="${lib.dir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            -->
+        </path>
+
+        <path id="modulepath-economy">
+            <pathelement location="${lib.dir}" />
+        </path>
+
+        <javac destdir="${economy.build.dir}">
+            <src path="${economy.src.dir}" />
+            <classpath refid="classpath-economy" />
+            <modulepath refid="modulepath-economy" />
+        </javac>
+    </target>
+
+    <target name="dist-economy" depends="init, load-properties, build-economy">
+        <mkdir dir="${economy.dist.dir}" />
+        <jar destfile="${economy.dist.dir}/${economy.jar.name}"
+            basedir="${economy.build.dir}"
+            includes="**/*.class">
+            <manifest>
+
+            </manifest>
+        </jar>
+    </target>
+
+
+<!--
+    ###################################
+    ### PersonalEconomy Core module ###
+    ###################################
+-->
+
+    <target name="clean-personalEconomy-core" depends="init, load-properties">
+        <delete dir="${personalEconomy.core.build.dir}" />
+        <delete dir="${personalEconomy.core.dist.dir}" />
+    </target>
+
+    <target name="build-personalEconomy-core" depends="init, load-properties, clean-personalEconomy-core">
+        <mkdir dir="${personalEconomy.core.build.dir}" />
+       
+        <path id="classpath-personalEconomy-core">
+            <!--
+            <fileset dir="${lib.dir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            -->
+        </path>
+
+        <path id="modulepath-personalEconomy-core">
+            <pathelement location="${lib.dir}" />
+        </path>
+
+        <javac destdir="${personalEconomy.core.build.dir}">
+            <src path="${personalEconomy.core.src.dir}" />
+            <classpath refid="classpath-personalEconomy-core" />
+            <modulepath refid="modulepath-personalEconomy-core" />
+        </javac>
+    </target>
+
+    <target name="dist-personalEconomy-core" depends="init, load-properties, build-personalEconomy-core">
+        <mkdir dir="${personalEconomy.core.dist.dir}" />
+        <jar destfile="${personalEconomy.core.dist.dir}/${personalEconomy.core.jar.name}"
+            basedir="${personalEconomy.core.build.dir}"
+            includes="**/*.class">
+            <manifest>
+
+            </manifest>
+        </jar>
+    </target>
+
+
+    
+<!--
+    #########################################
+    ### PersonalEconomy DesktopApp module ###
+    #########################################
+-->
+
+    <target name="clean-personalEconomy-desktopApp" depends="init, load-properties">
+        <delete dir="${personalEconomy.app.desktop.build.dir}" />
+        <delete dir="${personalEconomy.app.desktop.dist.dir}" />
+    </target>
+
+    <target name="build-personalEconomy-desktopApp" depends="init, load-properties, clean-personalEconomy-desktopApp">
+        <mkdir dir="${personalEconomy.app.desktop.build.dir}" />
+       
+        <path id="classpath-personalEconomy-desktopApp">
+            <!--
+            <fileset dir="${lib.dir}">
+                <include name="**/*.jar"/>
+            </fileset>
+            -->
+        </path>
+
+        <path id="modulepath-personalEconomy-desktopApp">
+            <pathelement location="${lib.dir}" />
+        </path>
+
+        <javac destdir="${personalEconomy.app.desktop.build.dir}">
+            <src path="${personalEconomy.app.desktop.src.dir}" />
+            <classpath refid="classpath-personalEconomy-desktopApp" />
+            <modulepath refid="modulepath-personalEconomy-desktopApp" />
+        </javac>
+    </target>
+
+    <target name="dist-personalEconomy-desktopApp" depends="init, load-properties, build-personalEconomy-desktopApp">
+        <mkdir dir="${personalEconomy.app.desktop.dist.dir}" />
+        <jar destfile="${personalEconomy.app.desktop.dist.dir}/${personalEconomy.app.desktop.jar.name}"
+            basedir="${personalEconomy.app.desktop.build.dir}"
+            includes="**/*.class">
+            <manifest>
+
+            </manifest>
+        </jar>
+    </target>
+    
+	<target name="run-personalEconomy-desktopApp" depends="init, load-properties, dist-personalEconomy-desktopApp">
+		<path id="modulepath-personalEconomy-desktopApp">
+			<pathelement location="${lib.dir}" />
+			<pathelement location="${personalEconomy.app.desktop.dist.dir}" />
+		</path>
+				
+		<java fork="true" 
+			failonerror="true"
+			module="${personalEconomy.app.desktop.module}"
+			classname="${personalEconomy.app.desktop.mainClass}"
+			modulepathref="modulepath-personalEconomy-desktopApp" />
+	</target>
+
+</project>
