@@ -1,3 +1,9 @@
+/**
+ * 
+ * @author Airondlph
+ * 
+ */
+
 module airondlph.economy {
     exports com.airondlph.economy;
     exports com.airondlph.economy.money;
